@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./logo.png" alt="CSER Logo" width="50">
+  <img src="./logo.png" alt="CSER Logo" width="200">
 </p>
 
 # Computing Systems Efficiency Research (CSER)
