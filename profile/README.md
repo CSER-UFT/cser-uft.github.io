@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./logo.png" alt="CSER Logo" width="200">
+</p>
+
 # Computing Systems Efficiency Research (CSER)
 
 The **Computing Systems Efficiency Research (CSER)** group is an academic initiative conducted by undergraduate students from the **Computer Science program at Universidade Federal do Tocantins (UFT)**.  
@@ -14,4 +18,3 @@ To promote scientific training and collaborative development among undergraduate
 
 ---
 📘 *This organization represents a collective effort of undergraduate researchers at UFT to explore innovative approaches in computing systems.*
-

@@ -31,7 +31,13 @@ h1,h2,h3{
 fetch('README.md')
 .then(response => response.text())
 .then(text => {
-    document.getElementById('content').innerHTML = marked.parse(text);
+
+    let html = marked.parse(text);
+
+    html = html.replace(/src="(?!http)/g,'src="./');
+
+    document.getElementById('content').innerHTML = html;
+
 });
 </script>
 
