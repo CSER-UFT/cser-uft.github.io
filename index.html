@@ -1,45 +1,266 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CSER UFT</title>
-
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
+<meta name="description" content="Computing Systems Efficiency Research (CSER): undergraduate research on energy efficient, approximate and hardware/software codesigned computing at Universidade Federal do Tocantins.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
-body{
-    font-family: Arial, sans-serif;
-    max-width: 900px;
-    margin: auto;
-    padding: 40px;
-    line-height: 1.6;
+/* Layout: one narrow column like a datasheet; header block, research areas, project entries with a spec line, member roster. */
+:root {
+  --bg: #f6f8fb;
+  --surface: #ffffff;
+  --fg: #14202e;
+  --muted: #56657a;
+  --line: #d9e1ec;
+  --chip: #0d4c8f;        /* package blue from the logo */
+  --chip-soft: #e6eef8;
+  --segment: #d8262f;     /* seven segment red from the logo, used sparingly */
+  --font-display: "Chakra Petch", "IBM Plex Sans", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d141d; --surface: #131c28; --fg: #e3e9f2; --muted: #93a2b7;
+    --line: #243246; --chip: #7fb0ea; --chip-soft: #18283c; --segment: #ff5a5f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d141d; --surface: #131c28; --fg: #e3e9f2; --muted: #93a2b7;
+  --line: #243246; --chip: #7fb0ea; --chip-soft: #18283c; --segment: #ff5a5f;
+  color-scheme: dark;
 }
 
-h1,h2,h3{
-    border-bottom:1px solid #ddd;
-    padding-bottom:5px;
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.wrap {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding-inline: 1.25rem;
+  padding-block: 3rem 2rem;
+  display: grid;
+  gap: 3.5rem;
+}
+a { color: var(--chip); text-underline-offset: 0.18em; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 2px solid var(--segment); outline-offset: 2px; border-radius: 2px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.2; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+
+/* Header */
+header { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: center; }
+header img { width: 6.5rem; height: 6.5rem; }
+.eyebrow {
+  font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted);
+}
+h1 { font-size: clamp(1.7rem, 4.5vw, 2.4rem); color: var(--chip); }
+h1 span { color: var(--segment); }
+.lead { margin-top: 0.75rem; max-width: 40rem; color: var(--fg); }
+@media (max-width: 34rem) {
+  header { grid-template-columns: 1fr; }
+  header img { width: 5rem; height: 5rem; }
+}
+
+/* Section headings with a pin row, echoing the chip package in the logo */
+section { display: grid; gap: 1.25rem; }
+h2 {
+  font-size: 1.35rem; display: flex; align-items: center; gap: 0.75rem;
+}
+h2::after {
+  content: ""; flex: 1; height: 6px;
+  background: repeating-linear-gradient(90deg, var(--line) 0 10px, transparent 10px 18px);
+}
+
+/* Research areas */
+.areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.area { border-top: 3px solid var(--chip); padding-top: 0.75rem; display: grid; gap: 0.35rem; align-content: start; }
+.area h3 { font-size: 1rem; }
+.area p { color: var(--muted); font-size: 0.93rem; }
+@media (max-width: 40rem) { .areas { grid-template-columns: 1fr; } }
+
+/* Projects */
+.projects { display: grid; gap: 1rem; }
+.project {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+  padding: 1.25rem 1.35rem; display: grid; gap: 0.7rem; min-width: 0;
+}
+.project-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.25rem 1rem; }
+.project h3 { font-size: 1.15rem; }
+.people { font-size: 0.93rem; color: var(--muted); }
+.people a { font-weight: 500; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag {
+  font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em;
+  padding: 0.12rem 0.5rem; border-radius: 3px; background: var(--chip-soft); color: var(--chip);
+}
+.tag.kind { background: transparent; border: 1px solid var(--segment); color: var(--segment); }
+.project p { max-width: 65ch; }
+.result { font-size: 0.93rem; color: var(--muted); }
+.result strong { color: var(--fg); font-weight: 600; font-variant-numeric: tabular-nums; }
+.spec {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.5rem 1rem;
+  border-top: 1px dashed var(--line); padding-top: 0.7rem;
+  font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted);
+}
+.spec .stack { min-width: 0; overflow-wrap: anywhere; }
+.repo { font-weight: 500; white-space: nowrap; }
+
+/* Members */
+.roster { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.25rem 2rem; list-style: none; margin: 0; padding: 0; }
+.roster li { display: flex; justify-content: space-between; gap: 1rem; padding-block: 0.45rem; border-bottom: 1px solid var(--line); }
+.roster .handle { font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); white-space: nowrap; }
+.roster-label { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.members { display: grid; gap: 1.5rem; }
+.members > div { display: grid; gap: 0.5rem; }
+@media (max-width: 40rem) { .roster { grid-template-columns: 1fr; } }
+
+footer {
+  border-top: 1px solid var(--line); padding-top: 1.25rem;
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem;
+  font-size: 0.88rem; color: var(--muted);
 }
 </style>
-
 </head>
-
 <body>
+<div class="wrap">
 
-<div id="content">Carregando...</div>
+<header>
+  <img src="logo.png" alt="CSER logo: a chip package with CSER on a seven segment display">
+  <div>
+    <div class="eyebrow">Universidade Federal do Tocantins &middot; Computer Science</div>
+    <h1>Computing Systems <span>Efficiency</span> Research</h1>
+    <p class="lead">CSER is an undergraduate research group at UFT. We study methods, tools and architectures that make computing systems faster, leaner and more sustainable, and we publish our code and data openly so every experiment can be reproduced.</p>
+  </div>
+</header>
 
-<script>
-fetch('README.md')
-.then(response => response.text())
-.then(text => {
+<section aria-labelledby="areas-title">
+  <h2 id="areas-title">Research areas</h2>
+  <div class="areas">
+    <div class="area">
+      <h3>Energy efficient computing</h3>
+      <p>Measuring where time and energy go, from hardware counters and RAPL on servers to current sensors on microcontrollers.</p>
+    </div>
+    <div class="area">
+      <h3>Approximate computing</h3>
+      <p>Trading a controlled amount of accuracy for speed, area or energy in arithmetic units, kernels and algorithms.</p>
+    </div>
+    <div class="area">
+      <h3>Hardware/software codesign</h3>
+      <p>Designing arithmetic circuits for FPGAs and evaluating them together with the software that uses them.</p>
+    </div>
+  </div>
+</section>
 
-    let html = marked.parse(text);
+<section aria-labelledby="projects-title">
+  <h2 id="projects-title">Projects</h2>
+  <div class="projects">
 
-    html = html.replace(/src="(?!http)/g,'src="./');
+    <article class="project">
+      <div class="project-head">
+        <h3>Sorting with Imprecise Comparators</h3>
+        <div class="people"><a href="https://github.com/RafaelSoares12">Rafael Soares</a></div>
+      </div>
+      <div class="tags"><span class="tag kind">undergraduate thesis</span><span class="tag">approximate computing</span><span class="tag">energy efficiency</span></div>
+      <p>Studies sorting when the comparator cannot tell apart values closer than a tolerance &delta; (the Ajtai et al. model). The project measures output error and performance of dual pivot quicksort, mergesort, shellsort and heapsort for &delta; &isin; {3, 5, 7, 11}, serial and parallel, using exact counts of inversions and the longest sorted subsequence.</p>
+      <p class="result">The worst case error of quicksort stays bounded at <strong>3&delta;</strong> while it grows with n for the other three. With &delta; = 11, serial quicksort runs <strong>5.4%</strong> faster and executes <strong>11.9%</strong> fewer instructions.</p>
+      <div class="spec"><span class="stack">C &middot; OpenMP &middot; Linux perf &middot; Python</span><a class="repo" href="https://github.com/CSER-UFT/sort-evaluation-tolerance">sort-evaluation-tolerance &rarr;</a></div>
+    </article>
 
-    document.getElementById('content').innerHTML = html;
+    <article class="project">
+      <div class="project-head">
+        <h3>Approximate Convolution and GEMM</h3>
+        <div class="people">Vinícius Arruda</div>
+      </div>
+      <div class="tags"><span class="tag kind">undergraduate thesis</span><span class="tag">approximate computing</span><span class="tag">performance</span></div>
+      <p>Evaluates 2D convolution, with contiguous and row allocated storage, and blocked matrix multiplication (GEMM) in C, in float and double precision. Each kernel has a complete version and an approximate one that skips kernel positions or iterations of the inner k loop. The study relates time, cycles, instructions, IPC, cache and branch counters to mean absolute error, mean relative error, RMSE and maximum error.</p>
+      <p class="result">The published campaign covers <strong>276</strong> configurations with <strong>50</strong> repetitions each, run as batch jobs on the group's Saruê server.</p>
+      <div class="spec"><span class="stack">C &middot; Linux perf &middot; HTCondor &middot; Python</span><a class="repo" href="https://github.com/CSER-UFT/matrix_convolution">matrix_convolution &rarr;</a></div>
+    </article>
 
-});
-</script>
+    <article class="project">
+      <div class="project-head">
+        <h3>Loop Perforation on IoT Devices</h3>
+        <div class="people"><a href="https://github.com/GFernandesZ">Gabriel Fernandes Zamora</a></div>
+      </div>
+      <div class="tags"><span class="tag kind">PIBIC</span><span class="tag">approximate computing</span><span class="tag">energy efficiency</span></div>
+      <p>Measures how loop perforation and related approximations change the energy consumption of matrix multiplication on a Raspberry Pi Pico 2W. An INA226 current sensor read by an ESP8266 records time and energy for matrices of order 40 to 200, and Python scripts compare the exact and approximate results with error metrics.</p>
+      <div class="spec"><span class="stack">C++ &middot; Pico SDK &middot; INA226 &middot; ESP8266 &middot; Python</span><a class="repo" href="https://github.com/CSER-UFT/Algoritmo-de-verifica-o-de-corrente">Algoritmo-de-verificação-de-corrente &rarr;</a></div>
+    </article>
 
+    <article class="project">
+      <div class="project-head">
+        <h3>Adder Architectures on FPGA</h3>
+        <div class="people"><a href="https://github.com/httpablo">Pablo Pereira Brito</a></div>
+      </div>
+      <div class="tags"><span class="tag kind">undergraduate thesis</span><span class="tag">hardware/software codesign</span><span class="tag">energy efficiency</span></div>
+      <p>Characterizes exact adder architectures (ripple carry, carry lookahead, carry skip, carry select, carry save, Kogge Stone and the vendor IP) at 8, 16 and 32 bits. Each design is synthesized and simulated in Vivado under uniform, normal and exponential input distributions to compare LUT and register usage with static, dynamic and total power. These designs are the baseline for the group's approximate adders.</p>
+      <div class="spec"><span class="stack">Verilog &middot; Vivado &middot; Spartan&#8209;7 xc7s50 &middot; Python</span><a class="repo" href="https://github.com/CSER-UFT/approximate_adders">approximate_adders &rarr;</a></div>
+    </article>
+
+    <article class="project">
+      <div class="project-head">
+        <h3>Exact and Approximate Multipliers on FPGA</h3>
+        <div class="people"><a href="https://github.com/jeovasb00">Jeová de Sousa Barbosa</a></div>
+      </div>
+      <div class="tags"><span class="tag kind">undergraduate thesis</span><span class="tag">approximate computing</span><span class="tag">hardware/software codesign</span></div>
+      <p>Compares exact multipliers (structural Wallace/Dadda tree, 4:2 compressors and radix 4 Booth) with approximate designs such as partial product perforation, hybrid radix 4 Booth and approximate 4:2 compressors. LUT, DSP and power figures from Vivado are set against MAE, MSE, MRED, NMED and error probability to find the Pareto trade offs between accuracy and cost.</p>
+      <div class="spec"><span class="stack">Verilog &middot; Vivado &middot; Python</span><a class="repo" href="https://github.com/CSER-UFT/approximate_multipliers">approximate_multipliers &rarr;</a></div>
+    </article>
+
+  </div>
+</section>
+
+<section aria-labelledby="members-title">
+  <h2 id="members-title">Members</h2>
+  <div class="members">
+    <div>
+      <div class="roster-label">Coordinator</div>
+      <ul class="roster">
+        <li><a href="https://github.com/almeidatiago">Prof. Dr. Tiago da Silva Almeida</a><span class="handle">@almeidatiago</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="roster-label">Students</div>
+      <ul class="roster">
+        <li><a href="https://github.com/assisDaniel">Daniel Barbosa de Assis Costa</a><span class="handle">@assisDaniel</span></li>
+        <li><a href="https://github.com/GFernandesZ">Gabriel Fernandes Zamora</a><span class="handle">@GFernandesZ</span></li>
+        <li><a href="https://github.com/GabryelMarques">Gabryel Soares Marques</a><span class="handle">@GabryelMarques</span></li>
+        <li><a href="https://github.com/httpablo">Pablo Pereira Brito</a><span class="handle">@httpablo</span></li>
+        <li><a href="https://github.com/RafaelSoares12">Rafael Soares</a><span class="handle">@RafaelSoares12</span></li>
+        <li><span>Tarciso Filho</span></li>
+        <li><span>Vinícius Arruda</span></li>
+      </ul>
+    </div>
+    <div>
+      <div class="roster-label">Alumni</div>
+      <ul class="roster">
+        <li><a href="https://github.com/jeovasb00">Jeová de Sousa Barbosa</a><span class="handle">@jeovasb00</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Computer Science, Universidade Federal do Tocantins, Palmas, Brazil</span>
+  <a href="https://github.com/CSER-UFT">github.com/CSER-UFT</a>
+</footer>
+
+</div>
 </body>
 </html>
