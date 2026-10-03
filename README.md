@@ -22,4 +22,4 @@ The **Computing Systems Efficiency Research (CSER)** group is an undergraduate r
 | Exact and Approximate Multipliers on FPGA (undergraduate thesis) | Jeová de Sousa Barbosa (alumnus) | [approximate_multipliers](https://github.com/CSER-UFT/approximate_multipliers) |
 
 ### About this repository
-This repository holds the group website. `index.html` is a self contained static page with no build step, so the same files are served by GitHub Pages and by the group's own server. To add a project, copy one `<article class="project">` block in `index.html` and add a row to the table above.
+This repository holds the group website. `index.html` and `research.html` are static pages that share `style.css`, with no build step, so the same files are served by GitHub Pages and by the group's own server. To add a project, copy one `<article class="project">` block in `index.html` and add a row to the table above.

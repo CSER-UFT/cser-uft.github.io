@@ -1,18 +1,23 @@
 name: Deploy CSER
 
+# Runs only for the main branch; other branches never reach the server.
 on:
   push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deploy at a time; a newer push waits instead of running in parallel.
+concurrency:
+  group: sarue-deploy
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: self-hosted
-
+    timeout-minutes: 5
     steps:
-      - name: Deploy
-        run: |
-          echo "Runner funcionando"
-          hostname
-          whoami
-          cd /var/www/cser
-          pwd
-          git pull
+      - name: Update site
+        run: git -C /var/www/cser pull --ff-only origin main

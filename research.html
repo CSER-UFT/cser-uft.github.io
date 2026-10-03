@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CSER Research</title>
+<meta name="description" content="How the CSER group at UFT approximates computation and how it measures cost and error.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+</head>
+<body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="index.html"><img src="logo.png" alt="">CSER</a>
+  <nav aria-label="Site">
+    <a href="index.html">Home</a>
+    <a href="research.html" aria-current="page">Research</a>
+  </nav>
+</div>
+
+<header style="grid-template-columns: 1fr;">
+  <div>
+    <div class="eyebrow">Research line</div>
+    <h1>Trading <span>accuracy</span> for efficiency</h1>
+    <p class="lead">Many applications tolerate small errors in their results: image and signal processing, machine learning, sensor data, ranking. Approximate computing uses that tolerance on purpose, giving up a controlled amount of accuracy for less energy, less area or less time. For every technique we study, we ask two questions: how much does it save, and how much error does it introduce?</p>
+  </div>
+</header>
+
+<section aria-labelledby="where-title">
+  <h2 id="where-title">Where we approximate</h2>
+  <div class="layers">
+    <div>
+      <h3>Arithmetic circuits</h3>
+      <p>Adders and multipliers on FPGA that drop or simplify partial products, carries and compressor logic in the least significant bits.</p>
+    </div>
+    <div>
+      <h3>Algorithms and kernels</h3>
+      <p>Sorting with tolerant comparators, and convolution and matrix multiplication that skip part of their iterations.</p>
+    </div>
+    <div>
+      <h3>Embedded devices</h3>
+      <p>Loop perforation on microcontrollers, where every saved instruction is energy drawn from a battery.</p>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="cost-title">
+  <h2 id="cost-title">How we measure cost</h2>
+  <div class="method">
+    <div>
+      <h3>Software on servers</h3>
+      <ul>
+        <li>Hardware counters from Linux <code>perf</code>: cycles, instructions, IPC, cache and branch misses.</li>
+        <li>User space events only, split into passes small enough that no counter is multiplexed, so counts are exact rather than estimated.</li>
+        <li>Threads pinned to cores, address space randomization disabled, and many repetitions per configuration, reported with confidence intervals.</li>
+        <li>Package and DRAM energy from Intel RAPL.</li>
+        <li>Long campaigns run as batch jobs with HTCondor on the group's server, so results do not depend on an open session.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Circuits on FPGA</h3>
+      <ul>
+        <li>Synthesis and implementation in AMD Vivado for a Spartan&#8209;7 device (xc7s50csga324&#8209;1).</li>
+        <li>Area as LUTs, CARRY4 cells, registers and DSP blocks; static, dynamic and total power from the implemented design.</li>
+        <li>Simulation over exhaustive inputs at 8 bits and over uniform, normal and exponential input distributions at 16 and 32 bits.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Embedded devices</h3>
+      <ul>
+        <li>Current measured with an INA226 sensor, sampled by a second microcontroller so the measurement does not disturb the device under test.</li>
+        <li>Results are sent to a host and compared with the exact computation offline when the device lacks memory to do it.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="error-title">
+  <h2 id="error-title">How we measure error</h2>
+  <div class="prose">
+    <p>Every approximate design is evaluated against its exact counterpart on the same inputs. No single number describes error well: an average can hide rare large mistakes, and an absolute value means little without the size of the result. We therefore report several metrics together.</p>
+    <p class="notation">For \(n\) inputs, \(O^{ac}_i\) is the exact (accurate) output and \(O^{ax}_i\) the approximate output for input \(i\). The error distance of one output is \(ED_i = \lvert O^{ac}_i - O^{ax}_i \rvert\).</p>
+  </div>
+
+  <div class="metrics">
+    <article class="metric">
+      <div class="metric-head"><span class="abbr">ED</span><h3>Error Distance</h3></div>
+      <div class="eq">\[ ED_i = \lvert O^{ac}_i - O^{ax}_i \rvert \]</div>
+      <p>The error of a single output, the building block of the metrics below.</p>
+    </article>
+    <article class="metric">
+      <div class="metric-head"><span class="abbr">EP</span><h3>Error Probability</h3></div>
+      <div class="eq">\[ EP = \frac{1}{n}\sum_{i=1}^{n} \big[\, O^{ac}_i \neq O^{ax}_i \,\big] \]</div>
+      <p>Fraction of inputs with a wrong result, however small.</p>
+    </article>
+    <article class="metric">
+      <div class="metric-head"><span class="abbr">MAE</span><h3>Mean Absolute Error</h3></div>
+      <div class="eq">\[ MAE = \frac{1}{n}\sum_{i=1}^{n} ED_i \]</div>
+      <p>Average error distance, also called mean error distance (MED).</p>
+    </article>
+    <article class="metric">
+      <div class="metric-head"><span class="abbr">NMED</span><h3>Normalized Mean Error Distance</h3></div>
+      <div class="eq">\[ NMED = \frac{MAE}{\max_{i} \lvert O^{ac}_i \rvert} \]</div>
+      <p>MAE divided by the largest exact output, so designs of different widths can be compared.</p>
+    </article>
+    <article class="metric">
+      <div class="metric-head"><span class="abbr">WCE</span><h3>Worst Case Error</h3></div>
+      <div class="eq">\[ WCE = \max_{i} \, ED_i \]</div>
+      <p>The largest error over all inputs; it exposes rare catastrophic cases that averages hide.</p>
+    </article>
+    <article class="metric">
+      <div class="metric-head"><span class="abbr">MRED</span><h3>Mean Relative Error Distance</h3></div>
+      <div class="eq">\[ MRED = \frac{1}{n}\sum_{i=1}^{n} \frac{ED_i}{\lvert O^{ac}_i \rvert}, \quad O^{ac}_i \neq 0 \]</div>
+      <p>Average error relative to the size of the exact result.</p>
+    </article>
+    <article class="metric">
+      <div class="metric-head"><span class="abbr">Bias</span><h3>Mean Relative Signed Error</h3></div>
+      <div class="eq">\[ Bias = \frac{1}{n}\sum_{i=1}^{n} \frac{O^{ac}_i - O^{ax}_i}{\lvert O^{ac}_i \rvert}, \quad O^{ac}_i \neq 0 \]</div>
+      <p>Like MRED but keeps the sign: a positive bias means the design underestimates on average. Errors that cancel out matter when results are accumulated.</p>
+    </article>
+    <article class="metric">
+      <div class="metric-head"><span class="abbr">WHD</span><h3>Worst Case Hamming Distance</h3></div>
+      <div class="eq">\[ WHD = \max_{i} \sum_{j=0}^{b-1} O^{ac}_{i,j} \oplus O^{ax}_{i,j} \]</div>
+      <p>The largest number of wrong bits in one output, where \(b\) is the output width and \(O_{i,j}\) is bit \(j\) of output \(i\).</p>
+    </article>
+    <article class="metric">
+      <div class="metric-head"><span class="abbr">MSE</span><h3>Mean Squared Error</h3></div>
+      <div class="eq">\[ MSE = \frac{1}{n}\sum_{i=1}^{n} \left( O^{ac}_i - O^{ax}_i \right)^2 \]</div>
+      <p>Penalizes large errors more than small ones; its square root is the RMSE.</p>
+    </article>
+    <article class="metric">
+      <div class="metric-head"><span class="abbr">PSNR</span><h3>Peak Signal to Noise Ratio</h3></div>
+      <div class="eq">\[ PSNR = 10 \log_{10} \frac{L^2}{MSE} \]</div>
+      <p>For images, in decibels; \(L\) is the largest possible pixel value, 255 for 8 bit images. Higher is better.</p>
+    </article>
+    <article class="metric">
+      <div class="metric-head"><span class="abbr">SSIM</span><h3>Structural Similarity Index</h3></div>
+      <div class="eq">\[ SSIM = l(ac, ax) \cdot c(ac, ax) \cdot s(ac, ax) \]</div>
+      <p>For images: the product of the similarity of local luminance \(l\), contrast \(c\) and structure \(s\) between exact and approximate images. 1 means identical.</p>
+    </article>
+  </div>
+</section>
+
+<section aria-labelledby="compare-title">
+  <h2 id="compare-title">Comparing designs</h2>
+  <div class="prose">
+    <p>A cheaper design with more error is not better or worse by itself. We plot each design by cost (area, power, energy or cycles) against error and keep the Pareto frontier: the designs that no other design beats on both axes at once. A new technique is worth adopting only when it moves that frontier.</p>
+  </div>
+</section>
+
+<footer>
+  <span>Computer Science, Universidade Federal do Tocantins, Palmas, Brazil</span>
+  <a href="https://github.com/CSER-UFT">github.com/CSER-UFT</a>
+</footer>
+
+</div>
+</body>
+</html>
