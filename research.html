@@ -32,26 +32,203 @@ window.MathJax = {
   <div>
     <div class="eyebrow">Research line</div>
     <h1>Trading <span>accuracy</span> for efficiency</h1>
-    <p class="lead">Many applications tolerate small errors in their results: image and signal processing, machine learning, sensor data, ranking. Approximate computing uses that tolerance on purpose, giving up a controlled amount of accuracy for less energy, less area or less time. For every technique we study, we ask two questions: how much does it save, and how much error does it introduce?</p>
+    <p class="lead">Our work belongs to <strong>approximate computing</strong> (AxC): designing circuits, systems and programs that insert errors on purpose, in a disciplined and tunable way, to save energy, area or time in applications that tolerate them. For every technique we study, we ask two questions: how much does it save, and how much error does it introduce?</p>
   </div>
 </header>
 
-<section aria-labelledby="where-title">
-  <h2 id="where-title">Where we approximate</h2>
-  <div class="layers">
-    <div>
-      <h3>Arithmetic circuits</h3>
-      <p>Adders and multipliers on FPGA that drop or simplify partial products, carries and compressor logic in the least significant bits.</p>
+<section aria-labelledby="why-title">
+  <h2 id="why-title">Why approximate</h2>
+  <div class="two-col">
+    <div class="prose">
+      <h3>Energy is the limit</h3>
+      <p>With the end of Dennard scaling and the slowdown of Moore's law, each new transistor no longer comes with a free drop in power. Energy has become a first order constraint, from battery powered sensors to data centers.</p>
+      <h3>Demand keeps growing</h3>
+      <p>Machine learning, signal processing and image processing need massive amounts of arithmetic, often under tight latency and power budgets at the edge and in the cloud.</p>
     </div>
-    <div>
-      <h3>Algorithms and kernels</h3>
-      <p>Sorting with tolerant comparators, and convolution and matrix multiplication that skip part of their iterations.</p>
-    </div>
-    <div>
-      <h3>Embedded devices</h3>
-      <p>Loop perforation on microcontrollers, where every saved instruction is energy drawn from a battery.</p>
+    <div class="prose">
+      <h3>Many applications tolerate error</h3>
+      <p>Approximation is possible because many applications do not need exact answers:</p>
+      <ul class="plain">
+        <li>human perception cannot notice small changes in images, audio or video;</li>
+        <li>data mining and ranking have no single correct answer;</li>
+        <li>iterative and probabilistic algorithms already converge to approximate results;</li>
+        <li>sensor and signal inputs are noisy to begin with;</li>
+        <li>neural networks often keep their accuracy with reduced precision weights.</li>
+      </ul>
     </div>
   </div>
+</section>
+
+<section aria-labelledby="principles-title">
+  <h2 id="principles-title">Designing an approximate system</h2>
+  <ol class="steps">
+    <li><strong>Analyze the application</strong> to define its quality requirements and error metrics.</li>
+    <li><strong>Analyze the workload</strong> to separate critical computations from approximable ones.</li>
+    <li><strong>Approximate systematically</strong>, using knowledge from more than one layer of the system.</li>
+    <li><strong>Model the error</strong>, so output quality can be estimated without running every configuration.</li>
+    <li><strong>Explore the design space</strong> to choose the best configurations within the quality constraints.</li>
+    <li><strong>Test under different input distributions</strong>, because error depends on the data.</li>
+  </ol>
+  <p class="caption">The set of all possible approximation configurations forms the design space. Searching it efficiently is one of the central problems of the field, and the focus of the group's work on metaheuristics.</p>
+</section>
+
+<section aria-labelledby="stack-title">
+  <h2 id="stack-title">The abstraction stack</h2>
+  <p class="prose">Approximate computing is not a single technique but a range of approaches spread across the design stack, from the circuit to the algorithm.</p>
+  <div class="stack">
+    <div class="layer">
+      <div class="layer-name">Hardware</div>
+      <ul class="chips">
+        <li>Approximate adders and multipliers</li>
+        <li>Reduced voltage and approximate writes in SRAM and DRAM</li>
+        <li>Configurable arithmetic units and voltage overscaling in processors and NPUs</li>
+        <li>Reduced numeric formats: FP16, BF16, INT8, posits</li>
+      </ul>
+    </div>
+    <div class="layer">
+      <div class="layer-name">Compilation and synthesis</div>
+      <ul class="chips">
+        <li>Approximate logic synthesis (AxLS, BLASYS)</li>
+        <li>Loop perforation and approximate memoization</li>
+        <li>Precision scaling</li>
+        <li>Operator fusion and pruning in TVM and XLA</li>
+        <li>Quantization (PTQ and QAT) to INT8 and INT4</li>
+      </ul>
+    </div>
+    <div class="layer">
+      <div class="layer-name">Software and algorithms</div>
+      <ul class="chips">
+        <li>Sampling, task skipping and early exit</li>
+        <li>Pruning of weights and channels</li>
+        <li>Quality of service control over approximable regions</li>
+        <li>Error tolerant domains: image, video, audio, ML inference</li>
+      </ul>
+    </div>
+  </div>
+  <p class="caption">Adapted from Leon et al. (2025).</p>
+</section>
+
+<section aria-labelledby="examples-title">
+  <h2 id="examples-title">Approximation in practice</h2>
+  <div class="examples">
+    <article class="example">
+      <h3>Software</h3>
+      <p class="ex-kind">Skipping loop iterations</p>
+      <div class="ex-step"><span class="ex-label">Exact</span>
+<pre><code>for (int i = 0; i &lt; b; i++)
+    loop_body();</code></pre></div>
+      <div class="ex-step"><span class="ex-label ax">Approximate</span>
+<pre><code>for (int i = 0; i &lt; b; i += 2)
+    loop_body();</code></pre></div>
+      <p class="ex-note">Half of the iterations run.</p>
+    </article>
+    <article class="example">
+      <h3>Hardware</h3>
+      <p class="ex-kind">Simplifying a full adder</p>
+      <div class="ex-step"><span class="ex-label">Exact</span>
+<pre><code>S    = A ⊕ B ⊕ Cin
+Cout = A·B + Cin·(A ⊕ B)</code></pre></div>
+      <div class="ex-step"><span class="ex-label ax">Approximate</span>
+<pre><code>S    = A ⊕ B
+Cout = Cin</code></pre></div>
+      <p class="ex-note">The AND and OR gates are removed.</p>
+    </article>
+    <article class="example">
+      <h3>Architecture</h3>
+      <p class="ex-kind">Fewer processing cores</p>
+      <div class="ex-step"><span class="ex-label">Exact</span>
+        <div class="cores c4" role="img" aria-label="A grid of 4 by 4 cores"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="ex-step"><span class="ex-label ax">Approximate</span>
+        <div class="cores c3" role="img" aria-label="A grid of 3 by 3 cores"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <p class="ex-note">16 cores reduced to 9.</p>
+    </article>
+    <article class="example">
+      <h3>Software and hardware</h3>
+      <p class="ex-kind">An approximate instruction</p>
+      <div class="ex-step"><span class="ex-label">Loop</span>
+<pre><code>for (int i = 0; i &lt; b; i = ADDX(i, n))
+    loop_body();</code></pre></div>
+      <div class="ex-step"><span class="ex-label ax">Custom ISA</span>
+<pre><code>int ADDX(int i, int n) {
+  int r;
+  asm volatile("addx %[z], %[x], %[y]"
+      : [z] "=r" (r)
+      : [x] "r" (i), [y] "r" (n));
+  if (r &lt;= i) r = i + n; /* correction */
+  return r;
+}</code></pre></div>
+      <p class="ex-note">An approximate add implemented in the processor, with a correction that keeps the loop moving forward.</p>
+    </article>
+  </div>
+  <p class="caption">Adapted from Catelan (2025).</p>
+</section>
+
+<section aria-labelledby="fronts-title">
+  <h2 id="fronts-title">Our research fronts</h2>
+  <p class="prose">The group works mostly at the hardware and compilation levels, with connections to software and to the tools that support the whole flow.</p>
+  <div class="fronts">
+    <article>
+      <h3>Hardware operators</h3>
+      <p>Approximate adders (LOA, HEAA, HOERAA, HERLOA) and multipliers (4:2 compressors, radix 4 Booth, partial product perforation, DSP based designs) in Verilog for FPGA, characterized by area, power and error. Together they form the group's operator library, in the spirit of EvoApprox8b and SMApproxLib. A squaring circuit and a multiply and accumulate systolic array apply these operators in larger datapaths.</p>
+    </article>
+    <article>
+      <h3>Design space exploration</h3>
+      <p>Metaheuristics (VNS and GRASP) search for the best combination of approximate operators in a Sobel edge detection filter under PSNR or SSIM constraints. Each candidate is evaluated with real synthesis in Vivado instead of an analytical model, so area and power come from implemented designs.</p>
+    </article>
+    <article>
+      <h3>Software and embedded systems</h3>
+      <p>Convolution and matrix multiplication in C with iteration skipping and precision scaling from double to float, which reached speedups of 1.66× in convolution and 1.94× in DGEMM, with errors around 10<sup>−7</sup> for the precision change. Loop perforation on microcontrollers measures what those savings mean in real energy on a battery powered device.</p>
+    </article>
+    <article>
+      <h3>Analytical tools</h3>
+      <p>Clang abstract syntax trees are turned into dataflow graphs to model error propagation before synthesis, which cuts the cost of exploring the design space. A second line maps LLVM IR to RISC-V, toward custom ISA extensions with approximate instructions.</p>
+    </article>
+  </div>
+
+  <figure class="map">
+    <svg viewBox="0 0 640 436" role="img" aria-labelledby="map-title map-desc">
+      <title id="map-title">How the research fronts connect</title>
+      <desc id="map-desc">Design space exploration and hardware operators exchange the operator library and measured results. Hardware operators feed matrix operations and embedded systems, which feed back requirements. Matrix operations inform embedded systems about real energy. Analytical tools support hardware operators, with potential links to design space exploration and matrix operations.</desc>
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill: var(--chip)"/></marker>
+        <marker id="ad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" style="fill: var(--muted)"/></marker>
+      </defs>
+      <g class="edges">
+        <line class="e" x1="310" y1="68" x2="310" y2="148" marker-end="url(#ah)"/>
+        <line class="e" x1="330" y1="148" x2="330" y2="68" marker-end="url(#ah)"/>
+        <text class="el" x="302" y="112" text-anchor="end">operator library</text>
+        <text class="el" x="338" y="112">measured results</text>
+        <polyline class="e" points="220,178 115,178 115,268" marker-start="url(#ah)" marker-end="url(#ah)"/>
+        <polyline class="e" points="420,178 525,178 525,268" marker-start="url(#ah)" marker-end="url(#ah)"/>
+        <line class="e" x1="212" y1="310" x2="418" y2="310" marker-end="url(#ah)"/>
+        <line class="e d" x1="418" y1="292" x2="212" y2="292" marker-end="url(#ad)"/>
+        <text class="el" x="258" y="328" text-anchor="middle"><tspan x="258">speedup to</tspan><tspan x="258" dy="13">real energy</tspan></text>
+        <line class="e" x1="310" y1="374" x2="310" y2="208" marker-end="url(#ah)"/>
+        <line class="e d" x1="330" y1="208" x2="330" y2="374" marker-end="url(#ad)"/>
+        <polyline class="e d" points="220,404 115,404 115,328" marker-end="url(#ad)"/>
+        <polyline class="e d" points="420,404 628,404 628,30 422,30" marker-end="url(#ad)"/>
+        <polyline class="e d" points="218,48 40,48 40,268" marker-end="url(#ad)"/>
+      </g>
+      <g class="nodes">
+        <rect x="220" y="10" width="200" height="58" rx="10"/>
+        <text class="nt" x="320" y="34" text-anchor="middle">Design space exploration</text>
+        <text class="ns" x="320" y="53" text-anchor="middle">metaheuristics, optimization</text>
+        <rect x="220" y="150" width="200" height="58" rx="10"/>
+        <text class="nt" x="320" y="174" text-anchor="middle">Hardware operators</text>
+        <text class="ns" x="320" y="193" text-anchor="middle">adders, multipliers, functions</text>
+        <rect x="20" y="270" width="190" height="58" rx="10"/>
+        <text class="nt" x="115" y="294" text-anchor="middle">Matrix operations</text>
+        <text class="ns" x="115" y="313" text-anchor="middle">DGEMM, convolution</text>
+        <rect x="420" y="270" width="190" height="58" rx="10"/>
+        <text class="nt" x="515" y="294" text-anchor="middle">Embedded and IoT</text>
+        <text class="ns" x="515" y="313" text-anchor="middle">energy, loop perforation</text>
+        <rect x="220" y="376" width="200" height="54" rx="10"/>
+        <text class="nt" x="320" y="398" text-anchor="middle">Analytical tools</text>
+        <text class="ns" x="320" y="417" text-anchor="middle">Clang, RISC-V, error graphs</text>
+      </g>
+    </svg>
+    <figcaption><span class="key solid"></span>established dependency <span class="key dashed"></span>potential or future connection</figcaption>
+  </figure>
 </section>
 
 <section aria-labelledby="cost-title">
@@ -156,6 +333,15 @@ window.MathJax = {
   <div class="prose">
     <p>A cheaper design with more error is not better or worse by itself. We plot each design by cost (area, power, energy or cycles) against error and keep the Pareto frontier: the designs that no other design beats on both axes at once. A new technique is worth adopting only when it moves that frontier.</p>
   </div>
+</section>
+
+<section aria-labelledby="refs-title">
+  <h2 id="refs-title">Further reading</h2>
+  <ul class="refs">
+    <li>V. Leon et al. Approximate Computing Survey, Part I: Terminology and Software and Hardware Approximation Techniques. <em>ACM Computing Surveys</em>, 2025.</li>
+    <li>V. Leon et al. Approximate Computing Survey, Part II: Application Specific and Architectural Approximation Techniques and Applications. <em>ACM Computing Surveys</em>, 2025.</li>
+    <li>R. H. Dennard et al. Design of ion implanted MOSFETs with very small physical dimensions. <em>IEEE Journal of Solid State Circuits</em>, 1974.</li>
+  </ul>
 </section>
 
 <footer>
