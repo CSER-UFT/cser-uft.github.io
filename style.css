@@ -207,3 +207,6 @@ mjx-container { color: var(--fg); }
 .key { display: inline-block; width: 1.8rem; height: 0; border-top: 2px solid var(--chip); margin-left: 0.6rem; }
 .key.dashed { border-top: 2px dashed var(--muted); }
 .refs { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.45rem; font-size: 0.92rem; max-width: 70ch; }
+
+/* Faculty roles stay readable and wrap on narrow screens */
+.roster.faculty .handle { white-space: normal; text-align: right; }
