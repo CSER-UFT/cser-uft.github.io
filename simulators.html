@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CSER Simulators</title>
+<meta name="description" content="Four educational RISC-V simulators from the CSER group at UFT: arithmetic, processors, multiprocessing and data level parallelism. They run in the browser, in Portuguese and English.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="index.html"><img src="logo.png" alt="">CSER</a>
+  <nav aria-label="Site">
+    <a href="index.html">Home</a>
+    <a href="research.html">Research</a>
+    <a href="simulators.html" aria-current="page">Simulators</a>
+  </nav>
+</div>
+
+<header style="grid-template-columns: 1fr;">
+  <div>
+    <div class="eyebrow">Teaching tools &middot; Computer Organization</div>
+    <h1>RISC-V <span>simulators</span></h1>
+    <p class="lead">Four educational simulators that follow the Patterson and Hennessy textbook, RISC-V edition, from how a number is stored to how many cores share memory. They are used in the Computer Organization course at UFT, run entirely in the browser with nothing to install, and offer Portuguese and English interfaces with a light theme and a high contrast dark theme.</p>
+  </div>
+</header>
+
+<section aria-labelledby="glance-title">
+  <h2 id="glance-title">At a glance</h2>
+  <div class="glance">
+    <table>
+      <thead><tr><th>Simulator</th><th>Covers</th><th>Textbook</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#fp">Arithmetic</a></td><td>integers, IEEE 754 floating point, fixed point, rounding</td><td>Chapter 3</td></tr>
+        <tr><td><a href="#cpu">Processors</a></td><td>single cycle, pipeline, Tomasulo, caches, virtual memory</td><td>Chapters 4 and 5</td></tr>
+        <tr><td><a href="#mp">Multiprocessing</a></td><td>cache coherence (MSI, MESI, MOESI) and atomic instructions</td><td>Chapters 5 and 6</td></tr>
+        <tr><td><a href="#dlp">Data level parallelism</a></td><td>vector processor, GPU and TPU</td><td>Chapter 6</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section aria-labelledby="sims-title">
+  <h2 id="sims-title">Simulators</h2>
+  <div class="projects">
+
+    <article class="project sim" id="fp">
+      <div class="project-head">
+        <h3>RISC-V Floating Point Simulator</h3>
+        <div class="people">Chapter 3</div>
+      </div>
+      <div class="tags"><span class="tag kind">arithmetic</span><span class="tag">IEEE 754</span><span class="tag">fixed point</span><span class="tag">integer algorithms</span></div>
+      <figure class="shot"><img src="img/simulators/fp.svg" alt="The 32 bits of 0.1 in single precision, colored by sign, exponent and fraction, with the value stored and the rounding decision" loading="lazy" width="700" height="262"></figure>
+      <ul class="plain">
+        <li>Any number converted bit by bit to double, single, half, bfloat16 and the two 8 bit OCP formats, with the stored value, the error in ULPs and the guard, round and sticky bits.</li>
+        <li>fadd, fmul, fdiv, fsqrt and fmadd shown as the hardware steps, under the five RISC-V rounding modes and stochastic rounding, with the fflags exceptions.</li>
+        <li>Integer multiplication and division in the textbook step tables, fixed point Qm.n formats, experiments on accumulated error and seeded exercise lists with automatic grading.</li>
+      </ul>
+      <div class="spec"><span class="stack">Every result is first computed exactly with BigInt rationals</span><span class="links"><a class="btn-open" href="https://cser-uft.github.io/riscv-fp-simulator/">Open simulator</a><a class="repo" href="https://github.com/CSER-UFT/riscv-fp-simulator">Source code &rarr;</a></span></div>
+    </article>
+
+    <article class="project sim" id="cpu">
+      <div class="project-head">
+        <h3>RISC-V Processor Simulator</h3>
+        <div class="people">Chapters 4 and 5</div>
+      </div>
+      <div class="tags"><span class="tag kind">processors</span><span class="tag">pipelining</span><span class="tag">Tomasulo</span><span class="tag">memory hierarchy</span></div>
+      <figure class="shot"><img src="img/simulators/cpu.svg" alt="Pipelined datapath in the style of the textbook, with the hazard detection unit stalling a floating point instruction" loading="lazy" width="1250" height="590"></figure>
+      <ul class="plain">
+        <li>Runs RV32 and RV64 programs on a single cycle datapath, a five stage pipeline with forwarding, hazard detection and branch prediction, and Tomasulo with or without a reorder buffer.</li>
+        <li>Each step explains what happened and lights up the wires and units involved, drawn as the datapath figures of the textbook.</li>
+        <li>Configurable L1, L2 and L3 caches, a TLB with Sv32 and Sv39 page tables and page faults, and execution time compared through the performance equation.</li>
+      </ul>
+      <div class="spec"><span class="stack">RV32/RV64 IMFD &middot; monocycle &middot; pipeline &middot; out of order</span><span class="links"><a class="btn-open" href="https://cser-uft.github.io/riscv-cpu-simulator/">Open simulator</a><a class="repo" href="https://github.com/CSER-UFT/riscv-cpu-simulator">Source code &rarr;</a></span></div>
+    </article>
+
+    <article class="project sim" id="mp">
+      <div class="project-head">
+        <h3>RISC-V Multiprocessing Simulator</h3>
+        <div class="people">Chapters 5 and 6</div>
+      </div>
+      <div class="tags"><span class="tag kind">multiprocessing</span><span class="tag">cache coherence</span><span class="tag">snooping</span><span class="tag">A extension</span></div>
+      <figure class="shot"><img src="img/simulators/mp.svg" alt="MESI state diagram: the accessing core moves from S to M with BusUpgr while another cache goes from S to I" loading="lazy" width="700" height="570"></figure>
+      <ul class="plain">
+        <li>Two to four cores with private caches on a snooping bus, under the MSI, MESI and MOESI protocols, with the same sequence compared across the three.</li>
+        <li>Every access animates a system figure (caches, bus and memory) and the protocol state diagram, showing the transition of the accessing core and of the caches that react.</li>
+        <li>RISC-V programs with lr.w, sc.w and AMOs run on all cores, with examples of a race condition, test and set and test and test and set locks, and false sharing.</li>
+      </ul>
+      <div class="spec"><span class="stack">MSI &middot; MESI &middot; MOESI &middot; RV32I + A</span><span class="links"><a class="btn-open" href="https://cser-uft.github.io/riscv-mp-simulator/">Open simulator</a><a class="repo" href="https://github.com/CSER-UFT/riscv-mp-simulator">Source code &rarr;</a></span></div>
+    </article>
+
+    <article class="project sim" id="dlp">
+      <div class="project-head">
+        <h3>RISC-V Data Level Parallelism Simulator</h3>
+        <div class="people">Chapter 6</div>
+      </div>
+      <div class="tags"><span class="tag kind">parallelism</span><span class="tag">vector extension</span><span class="tag">GPU</span><span class="tag">TPU</span></div>
+      <figure class="shot"><img src="img/simulators/dlp.svg" alt="GPU block diagram with the warp scheduler, eight SIMD lanes and the memory system, during branch divergence" loading="lazy" width="1256" height="664"></figure>
+      <ul class="plain">
+        <li>A vector processor for the RISC-V V extension with up to eight lanes, chaining, strip mining, masks, strided and indexed accesses.</li>
+        <li>A SIMT GPU with warps, a scheduler, up to sixteen lanes, branch divergence with a reconvergence stack and memory coalescing.</li>
+        <li>A TPU style systolic array for matrix multiplication, including int8 quantization, a small MLP and convolution through im2col, plus a comparison of the same workload on the three models.</li>
+      </ul>
+      <div class="spec"><span class="stack">RVV &middot; SIMT &middot; systolic array</span><span class="links"><a class="btn-open" href="https://cser-uft.github.io/riscv-dlp-simulator/">Open simulator</a><a class="repo" href="https://github.com/CSER-UFT/riscv-dlp-simulator">Source code &rarr;</a></span></div>
+    </article>
+
+  </div>
+</section>
+
+<section aria-labelledby="class-title">
+  <h2 id="class-title">For the classroom</h2>
+  <div class="areas">
+    <div class="area">
+      <h3>Figures for slides</h3>
+      <p>The current step can be exported as an SVG figure in the textbook style, ready for slides, exams and the editors students already use.</p>
+    </div>
+    <div class="area">
+      <h3>Tables for exams</h3>
+      <p>Step tables, timelines and event tables export to LaTeX, and blank versions turn any run into an exercise.</p>
+    </div>
+    <div class="area">
+      <h3>Shareable runs</h3>
+      <p>A link reopens a program with its configuration, so a whole class can start from the same example.</p>
+    </div>
+  </div>
+  <p class="caption">All four simulators are free software under the GPL 3.0 license. Each one is a set of static files with no build step and no dependencies, published on GitHub Pages.</p>
+</section>
+
+<footer>
+  <span>Computer Science, Universidade Federal do Tocantins, Palmas, Brazil</span>
+  <a href="https://github.com/CSER-UFT">github.com/CSER-UFT</a>
+</footer>
+
+</div>
+</body>
+</html>

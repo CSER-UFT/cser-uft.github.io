@@ -210,3 +210,22 @@ mjx-container { color: var(--fg); }
 
 /* Faculty roles stay readable and wrap on narrow screens */
 .roster.faculty .handle { white-space: normal; text-align: right; }
+
+/* Simulators page */
+.glance { overflow-x: auto; }
+.glance table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+.glance th { text-align: left; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding: 0.4rem 0.75rem 0.4rem 0; border-bottom: 2px solid var(--line); }
+.glance td { padding: 0.5rem 0.75rem 0.5rem 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.glance td:first-child a { font-weight: 600; white-space: nowrap; }
+.glance td:last-child { white-space: nowrap; color: var(--muted); font-family: var(--font-mono); font-size: 0.82rem; }
+.sim { scroll-margin-top: 1rem; }
+.shot { margin: 0; border: 1px solid var(--line); border-radius: 4px; background: #ffffff; padding: 0.5rem; }
+.shot img { display: block; width: 100%; height: auto; }
+.sim .plain { font-size: 0.95rem; max-width: 65ch; }
+.links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; }
+.btn-open { font-family: var(--font-body); font-weight: 600; font-size: 0.85rem; text-decoration: none; color: #ffffff; background: var(--chip); border-radius: 4px; padding: 0.3rem 0.8rem; white-space: nowrap; }
+.btn-open:hover { background: var(--segment); }
+:root[data-theme="dark"] .btn-open { color: #0d141d; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn-open { color: #0d141d; } }
+.teaser { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 1.1rem 1.35rem; display: grid; gap: 0.6rem; }
+.teaser ul { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.2rem; }

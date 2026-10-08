@@ -21,5 +21,16 @@ The **Computing Systems Efficiency Research (CSER)** group is an undergraduate r
 | Adder Architectures on FPGA (undergraduate thesis) | Pablo Pereira Brito | [approximate_adders](https://github.com/CSER-UFT/approximate_adders) |
 | Exact and Approximate Multipliers on FPGA (undergraduate thesis) | Jeová de Sousa Barbosa (alumnus) | [approximate_multipliers](https://github.com/CSER-UFT/approximate_multipliers) |
 
+### Teaching simulators
+
+Four educational RISC-V simulators used in the Computer Organization course, presented on the [Simulators page](https://cser-uft.github.io/simulators.html):
+
+| Simulator | Covers | Repository |
+|---|---|---|
+| Arithmetic | integers, IEEE 754 floating point, fixed point, rounding | [riscv-fp-simulator](https://github.com/CSER-UFT/riscv-fp-simulator) |
+| Processors | single cycle, pipeline, Tomasulo, caches, virtual memory | [riscv-cpu-simulator](https://github.com/CSER-UFT/riscv-cpu-simulator) |
+| Multiprocessing | cache coherence (MSI, MESI, MOESI) and atomic instructions | [riscv-mp-simulator](https://github.com/CSER-UFT/riscv-mp-simulator) |
+| Data level parallelism | vector processor, GPU and TPU | [riscv-dlp-simulator](https://github.com/CSER-UFT/riscv-dlp-simulator) |
+
 ### About this repository
-This repository holds the group website. `index.html` and `research.html` are static pages that share `style.css`, with no build step, so the same files are served by GitHub Pages and by the group's own server. To add a project, copy one `<article class="project">` block in `index.html` and add a row to the table above.
+This repository holds the group website. `index.html`, `research.html` and `simulators.html` are static pages that share `style.css`, with no build step, so the same files are served by GitHub Pages and by the group's own server. To add a project, copy one `<article class="project">` block in `index.html` and add a row to the table above. The figures on the Simulators page, in `img/simulators/`, are SVG exports from the simulators themselves.
