@@ -19,6 +19,7 @@ The **Computing Systems Efficiency Research (CSER)** group is an undergraduate r
 | Approximate Convolution and GEMM (undergraduate thesis) | Vinícius Arruda | [matrix_convolution](https://github.com/CSER-UFT/matrix_convolution) |
 | Loop Perforation on IoT Devices (PIBIC) | Gabriel Fernandes Zamora | [Algoritmo-de-verificação-de-corrente](https://github.com/CSER-UFT/Algoritmo-de-verifica-o-de-corrente) |
 | Adder Architectures on FPGA (undergraduate thesis) | Pablo Pereira Brito | [approximate_adders](https://github.com/CSER-UFT/approximate_adders) |
+| Systolic Matrix Multiplication on FPGA (PIBIC) | Samuel Andrade | [systolic_matrix](https://github.com/CSER-UFT/systolic_matrix) |
 | Exact and Approximate Multipliers on FPGA (undergraduate thesis) | Jeová de Sousa Barbosa (alumnus) | [approximate_multipliers](https://github.com/CSER-UFT/approximate_multipliers) |
 
 ### Teaching simulators
@@ -33,4 +34,4 @@ Four educational RISC-V simulators used in the Computer Organization course, pre
 | Data level parallelism | vector processor, GPU and TPU | [riscv-dlp-simulator](https://github.com/CSER-UFT/riscv-dlp-simulator) |
 
 ### About this repository
-This repository holds the group website. `index.html`, `research.html` and `simulators.html` are static pages that share `style.css`, with no build step, so the same files are served by GitHub Pages and by the group's own server. To add a project, copy one `<article class="project">` block in `index.html` and add a row to the table above. The figures on the Simulators page, in `img/simulators/`, are SVG exports from the simulators themselves.
+This repository holds the group website. `index.html`, `research.html`, `projects.html` and `simulators.html` are static pages that share `style.css`, with no build step, so the same files are served by GitHub Pages and by the group's own server. To add a project, copy the commented template at the top of the list in `projects.html`, add a line to the project list on the home page and a row to the table above. The figures on the Simulators page, in `img/simulators/`, are SVG exports from the simulators themselves.

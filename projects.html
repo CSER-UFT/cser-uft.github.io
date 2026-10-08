@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CSER Projects</title>
+<meta name="description" content="Student research projects of the CSER group at UFT: undergraduate theses and PIBIC projects on approximate computing, energy efficiency and hardware/software codesign.">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="index.html"><img src="logo.png" alt="">CSER</a>
+  <nav aria-label="Site">
+    <a href="index.html">Home</a>
+    <a href="research.html">Research</a>
+    <a href="projects.html" aria-current="page">Projects</a>
+    <a href="simulators.html">Simulators</a>
+  </nav>
+</div>
+
+<header style="grid-template-columns: 1fr;">
+  <div>
+    <div class="eyebrow">Student research &middot; undergraduate theses and PIBIC</div>
+    <h1>Research <span>projects</span></h1>
+    <p class="lead">Each project is led by a student of the Computer Science program at UFT, as an undergraduate thesis or a PIBIC scientific initiation project. Code, data and results are published in the group's repositories so every experiment can be reproduced.</p>
+  </div>
+</header>
+
+<section aria-labelledby="projects-title">
+  <h2 id="projects-title">Projects</h2>
+  <div class="projects">
+
+    <!--
+    To add a project, copy this block below, fill it in and give it a unique id
+    (also add a line to the list on the home page and a row to the README table).
+
+    <article class="project" id="short-id">
+      <div class="project-head">
+        <h3>Project title</h3>
+        <div class="people"><a href="https://github.com/USER">Student name</a></div>
+      </div>
+      <div class="tags"><span class="tag kind">undergraduate thesis or PIBIC</span><span class="tag">research area</span></div>
+      <p>What the project studies and how.</p>
+      <p class="result">Main result so far, with <strong>numbers</strong> (optional).</p>
+      <div class="spec"><span class="stack">Languages &middot; tools</span><a class="repo" href="https://github.com/CSER-UFT/REPO">REPO &rarr;</a></div>
+    </article>
+    -->
+
+    <article class="project" id="sorting">
+      <div class="project-head">
+        <h3>Sorting with Imprecise Comparators</h3>
+        <div class="people"><a href="https://github.com/RafaelSoares12">Rafael Soares</a></div>
+      </div>
+      <div class="tags"><span class="tag kind">undergraduate thesis</span><span class="tag">approximate computing</span><span class="tag">energy efficiency</span></div>
+      <p>Studies sorting when the comparator cannot tell apart values closer than a tolerance &delta; (the Ajtai et al. model). The project measures output error and performance of dual pivot quicksort, mergesort, shellsort and heapsort for &delta; &isin; {3, 5, 7, 11}, serial and parallel, using exact counts of inversions and the longest sorted subsequence.</p>
+      <p class="result">The worst case error of quicksort stays bounded at <strong>3&delta;</strong> while it grows with n for the other three. With &delta; = 11, serial quicksort runs <strong>5.4%</strong> faster and executes <strong>11.9%</strong> fewer instructions.</p>
+      <div class="spec"><span class="stack">C &middot; OpenMP &middot; Linux perf &middot; Python</span><a class="repo" href="https://github.com/CSER-UFT/sort-evaluation-tolerance">sort-evaluation-tolerance &rarr;</a></div>
+    </article>
+
+    <article class="project" id="convolution">
+      <div class="project-head">
+        <h3>Approximate Convolution and GEMM</h3>
+        <div class="people"><a href="https://github.com/ViiniDev">Vinícius Arruda</a></div>
+      </div>
+      <div class="tags"><span class="tag kind">undergraduate thesis</span><span class="tag">approximate computing</span><span class="tag">performance</span></div>
+      <p>Evaluates 2D convolution, with contiguous and row allocated storage, and blocked matrix multiplication (GEMM) in C, in float and double precision. Each kernel has a complete version and an approximate one that skips kernel positions or iterations of the inner k loop. The study relates time, cycles, instructions, IPC, cache and branch counters to mean absolute error, mean relative error, RMSE and maximum error.</p>
+      <p class="result">The published campaign covers <strong>276</strong> configurations with <strong>50</strong> repetitions each, run as batch jobs on the group's Saruê server.</p>
+      <div class="spec"><span class="stack">C &middot; Linux perf &middot; HTCondor &middot; Python</span><a class="repo" href="https://github.com/CSER-UFT/matrix_convolution">matrix_convolution &rarr;</a></div>
+    </article>
+
+    <article class="project" id="perforation">
+      <div class="project-head">
+        <h3>Loop Perforation on IoT Devices</h3>
+        <div class="people"><a href="https://github.com/GFernandesZ">Gabriel Fernandes Zamora</a></div>
+      </div>
+      <div class="tags"><span class="tag kind">PIBIC</span><span class="tag">approximate computing</span><span class="tag">energy efficiency</span></div>
+      <p>Measures how loop perforation and related approximations change the energy consumption of matrix multiplication on a Raspberry Pi Pico 2W. An INA226 current sensor read by an ESP8266 records time and energy for matrices of order 40 to 200, and Python scripts compare the exact and approximate results with error metrics.</p>
+      <div class="spec"><span class="stack">C++ &middot; Pico SDK &middot; INA226 &middot; ESP8266 &middot; Python</span><a class="repo" href="https://github.com/CSER-UFT/Algoritmo-de-verifica-o-de-corrente">Algoritmo-de-verificação-de-corrente &rarr;</a></div>
+    </article>
+
+    <article class="project" id="systolic">
+      <div class="project-head">
+        <h3>Systolic Matrix Multiplication on FPGA</h3>
+        <div class="people"><a href="https://github.com/Samuel1-salc">Samuel Andrade</a></div>
+      </div>
+      <div class="tags"><span class="tag kind">PIBIC</span><span class="tag">hardware/software codesign</span><span class="tag">energy efficiency</span></div>
+      <p>Designs a hardware accelerator for matrix multiplication as a systolic array of multiply accumulate (MAC) processing elements, described in Verilog and implemented on a Spartan&#8209;7 FPGA. The accelerator is compared in performance and energy efficiency with a GEMM baseline running on the CPU with OpenBLAS, the kind of workload behind machine learning and image processing.</p>
+      <p class="result">The first version is a <strong>3 &times; 3</strong> array of 4 bit processing elements with 10 bit accumulators, verified in simulation, with Vivado builds run as batch jobs on the group's Saru&ecirc; server.</p>
+      <div class="spec"><span class="stack">Verilog &middot; Vivado &middot; Spartan&#8209;7 xc7s50 &middot; C &middot; OpenBLAS</span><a class="repo" href="https://github.com/CSER-UFT/systolic_matrix">systolic_matrix &rarr;</a></div>
+    </article>
+
+    <article class="project" id="adders">
+      <div class="project-head">
+        <h3>Adder Architectures on FPGA</h3>
+        <div class="people"><a href="https://github.com/httpablo">Pablo Pereira Brito</a></div>
+      </div>
+      <div class="tags"><span class="tag kind">undergraduate thesis</span><span class="tag">hardware/software codesign</span><span class="tag">energy efficiency</span></div>
+      <p>Characterizes exact adder architectures (ripple carry, carry lookahead, carry skip, carry select, carry save, Kogge Stone and the vendor IP) at 8, 16 and 32 bits. Each design is synthesized and simulated in Vivado under uniform, normal and exponential input distributions to compare LUT and register usage with static, dynamic and total power. These designs are the baseline for the group's approximate adders.</p>
+      <div class="spec"><span class="stack">Verilog &middot; Vivado &middot; Spartan&#8209;7 xc7s50 &middot; Python</span><a class="repo" href="https://github.com/CSER-UFT/approximate_adders">approximate_adders &rarr;</a></div>
+    </article>
+
+    <article class="project" id="multipliers">
+      <div class="project-head">
+        <h3>Exact and Approximate Multipliers on FPGA</h3>
+        <div class="people"><a href="https://github.com/jeovasb00">Jeová de Sousa Barbosa</a></div>
+      </div>
+      <div class="tags"><span class="tag kind">undergraduate thesis</span><span class="tag">approximate computing</span><span class="tag">hardware/software codesign</span></div>
+      <p>Compares exact multipliers (structural Wallace/Dadda tree, 4:2 compressors and radix 4 Booth) with approximate designs such as partial product perforation, hybrid radix 4 Booth and approximate 4:2 compressors. LUT, DSP and power figures from Vivado are set against MAE, MSE, MRED, NMED and error probability to find the Pareto trade offs between accuracy and cost.</p>
+      <div class="spec"><span class="stack">Verilog &middot; Vivado &middot; Python</span><a class="repo" href="https://github.com/CSER-UFT/approximate_multipliers">approximate_multipliers &rarr;</a></div>
+    </article>
+
+  </div>
+</section>
+
+<footer>
+  <span>Computer Science, Universidade Federal do Tocantins, Palmas, Brazil</span>
+  <a href="https://github.com/CSER-UFT">github.com/CSER-UFT</a>
+</footer>
+
+</div>
+</body>
+</html>
