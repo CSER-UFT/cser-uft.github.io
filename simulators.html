@@ -73,11 +73,11 @@
       <div class="tags"><span class="tag kind">processors</span><span class="tag">pipelining</span><span class="tag">Tomasulo</span><span class="tag">memory hierarchy</span></div>
       <figure class="shot"><img src="img/simulators/cpu.svg" alt="Pipelined datapath in the style of the textbook, with the hazard detection unit stalling a floating point instruction" loading="lazy" width="1250" height="590"></figure>
       <ul class="plain">
-        <li>Runs RV32 and RV64 programs on a single cycle datapath, a five stage pipeline with forwarding, hazard detection and branch prediction, and Tomasulo with or without a reorder buffer.</li>
+        <li>Runs RV32 and RV64 programs on a single cycle datapath, a five stage pipeline with forwarding, hazard detection and branch prediction, the static dual issue pipeline of section 4.10, and Tomasulo with or without a reorder buffer.</li>
         <li>Each step explains what happened and lights up the wires and units involved, drawn as the datapath figures of the textbook.</li>
         <li>Configurable L1, L2 and L3 caches, a TLB with Sv32 and Sv39 page tables and page faults, and execution time compared through the performance equation.</li>
       </ul>
-      <div class="spec"><span class="stack">RV32/RV64 IMFD &middot; monocycle &middot; pipeline &middot; out of order</span><span class="links"><a class="btn-open" href="https://cser-uft.github.io/riscv-cpu-simulator/">Open simulator</a><a class="repo" href="https://github.com/CSER-UFT/riscv-cpu-simulator">Source code &rarr;</a></span></div>
+      <div class="spec"><span class="stack">RV32/RV64 IMFD &middot; single cycle &middot; pipeline &middot; dual issue &middot; out of order</span><span class="links"><a class="btn-open" href="https://cser-uft.github.io/riscv-cpu-simulator/">Open simulator</a><a class="repo" href="https://github.com/CSER-UFT/riscv-cpu-simulator">Source code &rarr;</a></span></div>
     </article>
 
     <article class="project sim" id="mp">
