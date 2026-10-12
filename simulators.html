@@ -37,7 +37,7 @@
     <table>
       <thead><tr><th>Simulator</th><th>Covers</th><th>Textbook</th></tr></thead>
       <tbody>
-        <tr><td><a href="#cc">Compiler</a></td><td>from a subset of C to LLVM IR and RISC-V, with pointers and the stack frame</td><td>Chapter 2</td></tr>
+        <tr><td><a href="#cc">Compiler</a></td><td>from a subset of C to LLVM IR and RISC-V, SSA, control and data flow, heat maps, classic and approximate optimizations</td><td>Chapter 2</td></tr>
         <tr><td><a href="#fp">Arithmetic</a></td><td>integers, IEEE 754 floating point, fixed point, rounding</td><td>Chapter 3</td></tr>
         <tr><td><a href="#cpu">Processors</a></td><td>single cycle, pipeline, Tomasulo, caches, virtual memory</td><td>Chapters 4 and 5</td></tr>
         <tr><td><a href="#mp">Multiprocessing</a></td><td>cache coherence (MSI, MESI, MOESI) and atomic instructions</td><td>Chapters 5 and 6</td></tr>
@@ -56,14 +56,15 @@
         <h3>RISC-V Compiler Simulator</h3>
         <div class="people">Chapter 2</div>
       </div>
-      <div class="tags"><span class="tag kind">compiler</span><span class="tag">LLVM IR</span><span class="tag">calling convention</span><span class="tag">pointers</span></div>
+      <div class="tags"><span class="tag kind">compiler</span><span class="tag">LLVM IR</span><span class="tag">SSA</span><span class="tag">calling convention</span><span class="tag">approximate computing</span></div>
       <figure class="shot"><img src="img/simulators/cc.svg" alt="Abstract syntax tree of an array sum, with the type of each expression computed by semantic analysis" loading="lazy" width="915" height="590"></figure>
       <ul class="plain">
         <li>Compiles MiniC, a subset of C with int, float, pointers, arrays and recursion, showing the tokens, the abstract syntax tree growing as the parser builds it and the symbol table with its scopes.</li>
         <li>Generates LLVM IR as clang -O0 does and then RISC-V assembly, side by side and linked to the source: clicking a line in any of the three views highlights the matching lines in the other two.</li>
         <li>Draws the activation record of each function, runs the generated code and opens it in the processor simulator to watch it go through the pipeline.</li>
+        <li>For research: mem2reg and SSA form, control flow graphs with dominators and natural loops, per block data flow graphs with the critical path, static and measured heat maps with the cycles of each instruction on the processor models, and classic and approximate optimizations (loop perforation, reduced precision, approximate multiplication) with error versus speedup curves. Graphs export to SVG and Graphviz DOT, data to CSV.</li>
       </ul>
-      <div class="spec"><span class="stack">MiniC &middot; LLVM IR &middot; RV32IMF &middot; ilp32f ABI</span><span class="links"><a class="btn-open" href="https://cser-uft.github.io/riscv-cc-simulator/">Open simulator</a><a class="repo" href="https://github.com/CSER-UFT/riscv-cc-simulator">Source code &rarr;</a></span></div>
+      <div class="spec"><span class="stack">MiniC &middot; LLVM IR &middot; SSA &middot; RV32IMF &middot; ilp32f ABI</span><span class="links"><a class="btn-open" href="https://cser-uft.github.io/riscv-cc-simulator/">Open simulator</a><a class="repo" href="https://github.com/CSER-UFT/riscv-cc-simulator">Source code &rarr;</a></span></div>
     </article>
 
     <article class="project sim" id="fp">
