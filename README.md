@@ -24,10 +24,11 @@ The **Computing Systems Efficiency Research (CSER)** group is an undergraduate r
 
 ### Teaching simulators
 
-Four educational RISC-V simulators used in the Computer Organization course, presented on the [Simulators page](https://cser-uft.github.io/simulators.html):
+Five educational RISC-V simulators used in the Computer Organization course, presented on the [Simulators page](https://cser-uft.github.io/simulators.html):
 
 | Simulator | Covers | Repository |
 |---|---|---|
+| Compiler | from a subset of C to LLVM IR and RISC-V, with pointers and the stack frame | [riscv-cc-simulator](https://github.com/CSER-UFT/riscv-cc-simulator) |
 | Arithmetic | integers, IEEE 754 floating point, fixed point, rounding | [riscv-fp-simulator](https://github.com/CSER-UFT/riscv-fp-simulator) |
 | Processors | single cycle, pipeline, Tomasulo, caches, virtual memory | [riscv-cpu-simulator](https://github.com/CSER-UFT/riscv-cpu-simulator) |
 | Multiprocessing | cache coherence (MSI, MESI, MOESI) and atomic instructions | [riscv-mp-simulator](https://github.com/CSER-UFT/riscv-mp-simulator) |

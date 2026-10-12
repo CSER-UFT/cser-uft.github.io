@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>CSER Simulators</title>
-<meta name="description" content="Four educational RISC-V simulators from the CSER group at UFT: arithmetic, processors, multiprocessing and data level parallelism. They run in the browser, in Portuguese and English.">
+<meta name="description" content="Five educational RISC-V simulators from the CSER group at UFT: compiler, arithmetic, processors, multiprocessing and data level parallelism. They run in the browser, in Portuguese and English.">
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +27,7 @@
   <div>
     <div class="eyebrow">Teaching tools &middot; Computer Organization</div>
     <h1>RISC-V <span>simulators</span></h1>
-    <p class="lead">Four educational simulators that follow the Patterson and Hennessy textbook, RISC-V edition, from how a number is stored to how many cores share memory. They are used in the Computer Organization course at UFT, run entirely in the browser with nothing to install, and offer Portuguese and English interfaces with a light theme and a high contrast dark theme.</p>
+    <p class="lead">Five educational simulators that follow the Patterson and Hennessy textbook, RISC-V edition, from how a C program becomes instructions to how many cores share memory. They are used in the Computer Organization course at UFT, run entirely in the browser with nothing to install, and offer Portuguese and English interfaces with a light theme and a high contrast dark theme.</p>
   </div>
 </header>
 
@@ -37,6 +37,7 @@
     <table>
       <thead><tr><th>Simulator</th><th>Covers</th><th>Textbook</th></tr></thead>
       <tbody>
+        <tr><td><a href="#cc">Compiler</a></td><td>from a subset of C to LLVM IR and RISC-V, with pointers and the stack frame</td><td>Chapter 2</td></tr>
         <tr><td><a href="#fp">Arithmetic</a></td><td>integers, IEEE 754 floating point, fixed point, rounding</td><td>Chapter 3</td></tr>
         <tr><td><a href="#cpu">Processors</a></td><td>single cycle, pipeline, Tomasulo, caches, virtual memory</td><td>Chapters 4 and 5</td></tr>
         <tr><td><a href="#mp">Multiprocessing</a></td><td>cache coherence (MSI, MESI, MOESI) and atomic instructions</td><td>Chapters 5 and 6</td></tr>
@@ -49,6 +50,21 @@
 <section aria-labelledby="sims-title">
   <h2 id="sims-title">Simulators</h2>
   <div class="projects">
+
+    <article class="project sim" id="cc">
+      <div class="project-head">
+        <h3>RISC-V Compiler Simulator</h3>
+        <div class="people">Chapter 2</div>
+      </div>
+      <div class="tags"><span class="tag kind">compiler</span><span class="tag">LLVM IR</span><span class="tag">calling convention</span><span class="tag">pointers</span></div>
+      <figure class="shot"><img src="img/simulators/cc.svg" alt="Abstract syntax tree of an array sum, with the type of each expression computed by semantic analysis" loading="lazy" width="915" height="590"></figure>
+      <ul class="plain">
+        <li>Compiles MiniC, a subset of C with int, float, pointers, arrays and recursion, showing the tokens, the abstract syntax tree growing as the parser builds it and the symbol table with its scopes.</li>
+        <li>Generates LLVM IR as clang -O0 does and then RISC-V assembly, side by side and linked to the source: clicking a line in any of the three views highlights the matching lines in the other two.</li>
+        <li>Draws the activation record of each function, runs the generated code and opens it in the processor simulator to watch it go through the pipeline.</li>
+      </ul>
+      <div class="spec"><span class="stack">MiniC &middot; LLVM IR &middot; RV32IMF &middot; ilp32f ABI</span><span class="links"><a class="btn-open" href="https://cser-uft.github.io/riscv-cc-simulator/">Open simulator</a><a class="repo" href="https://github.com/CSER-UFT/riscv-cc-simulator">Source code &rarr;</a></span></div>
+    </article>
 
     <article class="project sim" id="fp">
       <div class="project-head">
@@ -129,7 +145,7 @@
       <p>A link reopens a program with its configuration, so a whole class can start from the same example.</p>
     </div>
   </div>
-  <p class="caption">All four simulators are free software under the GPL 3.0 license. Each one is a set of static files with no build step and no dependencies, published on GitHub Pages.</p>
+  <p class="caption">All five simulators are free software under the GPL 3.0 license. Each one is a set of static files with no build step and no dependencies, published on GitHub Pages.</p>
 </section>
 
 <footer>
