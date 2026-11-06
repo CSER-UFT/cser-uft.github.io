@@ -22,7 +22,7 @@ The **Computing Systems Efficiency Research (CSER)** group is an undergraduate r
 | Systolic Matrix Multiplication on FPGA (PIBIC) | Samuel Andrade | [systolic_matrix](https://github.com/CSER-UFT/systolic_matrix) |
 | Exact and Approximate Multipliers on FPGA (undergraduate thesis) | Jeová de Sousa Barbosa (alumnus) | [approximate_multipliers](https://github.com/CSER-UFT/approximate_multipliers) |
 | GRASP Exploration of an Approximate Sobel Filter on FPGA (undergraduate thesis) | Tarciso Filho | [approximate_sobel](https://github.com/CSER-UFT/approximate_sobel) |
-| Error Propagation in Computational Graphs | Gabriel Martiliano | [Propagacao-de-erro-em-grafo](https://github.com/gabrielMartiliano/Propagacao-de-erro-em-grafo) |
+| Error Propagation in Computational Graphs (undergraduate thesis) | Gabriel Martiliano | [Propagacao-de-erro-em-grafo](https://github.com/gabrielMartiliano/Propagacao-de-erro-em-grafo) |
 
 ### Teaching simulators
 
