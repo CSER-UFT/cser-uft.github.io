@@ -116,12 +116,13 @@
 
     <article class="project" id="sobel">
       <div class="project-head">
-        <h3>Approximate Sobel Edge Detection</h3>
+        <h3>GRASP Exploration of an Approximate Sobel Filter on FPGA</h3>
         <div class="people"><a href="https://github.com/tarcisof">Tarciso Filho</a></div>
       </div>
-      <div class="tags"><span class="tag">approximate computing</span></div>
-      <p>Applies approximate computing techniques to the Sobel edge detection filter.</p>
-      <div class="spec"><span class="stack">Approximate computing</span><a class="repo" href="https://github.com/CSER-UFT/approximate_sobel">approximate_sobel &rarr;</a></div>
+      <div class="tags"><span class="tag kind">undergraduate thesis</span><span class="tag">approximate computing</span><span class="tag">hardware/software codesign</span><span class="tag">optimization</span></div>
+      <p>Truncating the least significant bits of arithmetic units cuts FPGA resource usage, but choosing which components to approximate, and by how much, is a large combinatorial optimization problem. The project uses the GRASP metaheuristic (Greedy Randomized Adaptive Search Procedure) to automate the design space exploration of a Sobel edge detection filter, built with High Level Synthesis in Vitis HLS for a Xilinx Spartan&#8209;7 FPGA.</p>
+      <p>The search minimizes LUTs and flip flops while keeping image quality within limits set by SSIM and PSNR, aiming to find efficient configurations in feasible time without degrading edge detection.</p>
+      <div class="spec"><span class="stack">Vitis HLS &middot; Spartan&#8209;7 &middot; GRASP &middot; SSIM &middot; PSNR</span><a class="repo" href="https://github.com/CSER-UFT/approximate_sobel">approximate_sobel &rarr;</a></div>
     </article>
 
     <article class="project" id="error-propagation">
